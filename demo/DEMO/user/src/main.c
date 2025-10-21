@@ -121,7 +121,7 @@ void Init_All(void)
 	adc_init(ADC_CHANNEL1, ADC_12BIT);                                          // 初始化对应 ADC 通道为对应精度
     adc_init(ADC_CHANNEL2, ADC_12BIT);                                          // 初始化对应 ADC 通道为对应精度
     adc_init(ADC_CHANNEL3, ADC_12BIT);                                          // 初始化对应 ADC 通道为对应精度
-    adc_init(ADC_CHANNEL4, ADC_12BIT);                                          // 初始化对应 ADC 通道为对应精度
+    adc_init(ADC_CHANNEL4, ADC_12BIT)                                        // 初始化对应 ADC 通道为对应精度
 		
 	//初始化舵机引脚
     pwm_init(SERVO_MOTOR1_PWM, SERVO_MOTOR_FREQ, 0);
