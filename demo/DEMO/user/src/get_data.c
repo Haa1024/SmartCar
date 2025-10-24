@@ -18,6 +18,19 @@ uint16_t adc_buffer[ADC_CHANNEL_NUMBER];
 //根据电感数值计算得到的误差值
 float adc_error;
 
+int16 offset = 0;
+
+//-------------------------- 滤波参数优化 --------------------------
+// 滑动平均滤波窗口大小（越大滤波效果越强，响应越慢，建议5-10）
+#define FILTER_WINDOW_SIZE 8
+// 每个通道的历史数据缓冲区（保存最近N次采样值）
+uint16_t adc_history[ADC_CHANNEL_NUMBER][FILTER_WINDOW_SIZE] = {0};
+// 每个通道的历史数据索引（用于循环更新缓冲区）
+uint8 adc_history_index[ADC_CHANNEL_NUMBER] = {0};
+// 每个通道的历史数据总和（用于快速计算平均值）
+uint32_t adc_history_sum[ADC_CHANNEL_NUMBER] = {0};
+
+
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     读取编码器数值
 // 参数说明     无
@@ -50,18 +63,56 @@ void get_encoder()
 // 备注信息     读取4路ADC得到四路电感采集数值
 //				此处误差值error直接由第一路和第四路电感直接做差得到，其余误差计算算法可自行尝试
 //-------------------------------------------------------------------------------------------------------------------
+//void get_adc()
+//{
+//	  for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
+// {
+//			adc_buffer[channel_index] = adc_convert(channel_list[channel_index]);   //采集电磁adc信号，若需滤波，自行调用或自己写滤波函数
+// }
+//	adc_error = (float)(adc_buffer[0] - adc_buffer[3] + offset);//用电磁信号计算偏差，两边电感采样的adc值相减
+//}
+	
 void get_adc()
 {
-	  for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
-  {
-			adc_buffer[channel_index] = adc_convert(channel_list[channel_index]);   //采集电磁adc信号，若需滤波，自行调用或自己写滤波函数
-  }
-	adc_error = (float)(adc_buffer[0] - adc_buffer[3] + 21);//用电磁信号计算偏差，两边电感采样的adc值相减
+    for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
+    {
+        // 1. 读取新的ADC采样值
+        uint16_t new_adc = adc_convert(channel_list[channel_index]);
+        
+        // 2. 更新历史数据缓冲区：移除最旧的值，加入新值
+        // 减去缓冲区中最旧的数据（索引位置的上一个值）
+        adc_history_sum[channel_index] -= adc_history[channel_index][adc_history_index[channel_index]];
+        // 保存新数据到缓冲区
+        adc_history[channel_index][adc_history_index[channel_index]] = new_adc;
+        // 加上新数据到总和
+        adc_history_sum[channel_index] += new_adc;
+        
+        // 3. 更新索引（循环覆盖旧数据）
+        adc_history_index[channel_index] = (adc_history_index[channel_index] + 1) % FILTER_WINDOW_SIZE;
+        
+        // 4. 计算平均值作为滤波后的值（滑动平均核心）
+        adc_buffer[channel_index] = adc_history_sum[channel_index] / FILTER_WINDOW_SIZE;
+    }
+    
+    // 计算误差值
+    adc_error = (float)(adc_buffer[0] - adc_buffer[3] + offset);
 }
 	
+
 void get_data()
 {
 	get_encoder();
 	get_adc();
 	
+}
+
+void reset_offset()
+{
+    if(key_get_state(KEY_1)==KEY_SHORT_PRESS)
+    {
+        get_adc();
+        offset = adc_buffer[3] - adc_buffer[0];
+        key_clear_state(KEY_1);
+    }
+    
 }

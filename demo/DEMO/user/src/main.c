@@ -47,6 +47,9 @@ extern int16 encoder_data_1;
 extern float adc_error;
 extern int8 duty;	
 
+extern int16 offset;
+extern void reset_offset();
+
 void Init_All(void);
 
 int main(void)
@@ -80,9 +83,12 @@ int main(void)
 		
 		tft180_show_int(70, 90, encoder_data_1, 4);
 		
-		tft180_show_int(50, 105, duty, 3);
+		tft180_show_int(50, 105, offset, 3);
+        
         
         // 此处编写需要循环执行的代码
+        key_scanner();
+        reset_offset();
     }
 }
 
@@ -134,6 +140,8 @@ void Init_All(void)
     
     //关掉这该死的蜂鸣器
     gpio_init(B11,GPO,0,GPO_PUSH_PULL);
+    
+    key_init(10);
    
 }
 
