@@ -4,6 +4,7 @@
 ".\objects\get_data.o"
 ".\objects\servo_control.o"
 ".\objects\speed_control.o"
+".\objects\magnet_detect.o"
 ".\objects\zf_common_clock.o"
 ".\objects\zf_common_debug.o"
 ".\objects\zf_common_fifo.o"

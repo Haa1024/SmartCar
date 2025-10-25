@@ -1,5 +1,5 @@
-./objects/main.o: ..\user\src\main.c \
-  ..\..\libraries\zf_common\zf_common_headfile.h \
+./objects/magnet_detect.o: ..\code\magnet_detect.c \
+  ..\code\magnet_detect.h ..\..\libraries\zf_common\zf_common_headfile.h \
   ..\..\libraries\sdk\drives\fsl_common.h \
   ..\..\libraries\sdk\deceive\fsl_device_registers.h \
   ..\..\libraries\sdk\deceive\MIMXRT1064.h \
@@ -88,5 +88,4 @@
   ..\..\libraries\sdk\drives\fsl_usdhc.h \
   ..\..\libraries\components\sdmmc\common\fsl_sdmmc_spec.h \
   ..\..\libraries\components\sdmmc\sdmmc_config.h \
-  ..\..\libraries\sdk\board\clock_config.h ..\user\inc\isr.h \
-  ..\user\inc\my_common.h ..\code\magnet_detect.h
+  ..\..\libraries\sdk\board\clock_config.h ..\user\inc\isr.h

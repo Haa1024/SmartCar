@@ -15,6 +15,9 @@ adc_channel_enum channel_list[ADC_CHANNEL_NUMBER] =
 };
 uint16_t adc_buffer[ADC_CHANNEL_NUMBER];
 
+//能测量到最大的电感值
+uint16_t adc_MAX[4]={0};
+
 //根据电感数值计算得到的误差值
 float adc_error;
 
@@ -75,10 +78,13 @@ void get_encoder()
 void get_adc()
 {
     for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
-    {
+    {   
         // 1. 读取新的ADC采样值
-        uint16_t new_adc = adc_convert(channel_list[channel_index]);
-        
+        uint16_t new_adc = adc_convert(channel_list[channel_index]);   
+        if(adc_MAX[channel_index]<new_adc)
+        {
+            adc_MAX[channel_index]=new_adc;
+        }
         // 2. 更新历史数据缓冲区：移除最旧的值，加入新值
         // 减去缓冲区中最旧的数据（索引位置的上一个值）
         adc_history_sum[channel_index] -= adc_history[channel_index][adc_history_index[channel_index]];
@@ -86,10 +92,8 @@ void get_adc()
         adc_history[channel_index][adc_history_index[channel_index]] = new_adc;
         // 加上新数据到总和
         adc_history_sum[channel_index] += new_adc;
-        
         // 3. 更新索引（循环覆盖旧数据）
         adc_history_index[channel_index] = (adc_history_index[channel_index] + 1) % FILTER_WINDOW_SIZE;
-        
         // 4. 计算平均值作为滤波后的值（滑动平均核心）
         adc_buffer[channel_index] = adc_history_sum[channel_index] / FILTER_WINDOW_SIZE;
     }
@@ -98,6 +102,9 @@ void get_adc()
     adc_error = (float)(adc_buffer[0] - adc_buffer[3] + offset);
 }
 	
+
+
+
 
 void get_data()
 {
