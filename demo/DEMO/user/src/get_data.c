@@ -13,15 +13,25 @@ adc_channel_enum channel_list[ADC_CHANNEL_NUMBER] =
 {
     ADC_CHANNEL1, ADC_CHANNEL2, ADC_CHANNEL3, ADC_CHANNEL4,
 };
+
 uint16_t adc_buffer[ADC_CHANNEL_NUMBER];
 
+//储存归一化后的电感值
+float adc_normal_buffer[ADC_CHANNEL_NUMBER];
+
+//定义差比和差公式中的系数
+
+float coef_A = 1;
+float coef_B = 1;
+float coef_C = 1;
+
 //能测量到最大的电感值
-uint16_t adc_MAX[4]={0};
+uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={1};
 
 //根据电感数值计算得到的误差值
 float adc_error;
 
-int16 offset = 0;
+float offset = 0;
 
 //-------------------------- 滤波参数优化 --------------------------
 // 滑动平均滤波窗口大小（越大滤波效果越强，响应越慢，建议5-10）
@@ -98,8 +108,14 @@ void get_adc()
         adc_buffer[channel_index] = adc_history_sum[channel_index] / FILTER_WINDOW_SIZE;
     }
     
+    //计算归一化后的电感值
+    for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
+    {
+        adc_normal_buffer[channel_index]=(float)((float)adc_buffer[channel_index]/(float)adc_MAX[channel_index]);
+    }
+    
     // 计算误差值
-    adc_error = (float)(adc_buffer[0] - adc_buffer[3] + offset);
+    adc_error = ((coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3]) + coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])))/(coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+func_abs(adc_normal_buffer[1] - adc_normal_buffer[2]))+offset;
 }
 	
 
@@ -117,8 +133,7 @@ void reset_offset()
 {
     if(key_get_state(KEY_1)==KEY_SHORT_PRESS)
     {
-        get_adc();
-        offset = adc_buffer[3] - adc_buffer[0];
+        offset = -(((coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3]) + coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])))/(coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+coef_C*func_abs(adc_normal_buffer[1] - adc_normal_buffer[2])));
         key_clear_state(KEY_1);
     }
     

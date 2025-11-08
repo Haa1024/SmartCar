@@ -44,6 +44,7 @@
 // 第一步 关闭上面所有打开的文件
 // 第二步 project->clean  等待下方进度条走完
 extern uint16_t adc_buffer[ADC_CHANNEL_NUMBER];
+extern float adc_normal_buffer[ADC_CHANNEL_NUMBER];
 extern int16 encoder_data_1;
 extern int16 encoder_data_2;
 extern float adc_error;
@@ -72,7 +73,6 @@ int main(void)
     {
         // 此处编写需要循环执行的代码
         key_scanner();
-        reset_offset();
         showMain();
     }
 }
@@ -131,9 +131,10 @@ void pit_handler (void)
 //主菜单显示
 void showMain()
 {
+    reset_offset();
     if(key_get_state(KEY_2)==KEY_SHORT_PRESS)
     {
-        if(pages==1){
+        if(pages==2){
             pages=0;
         }
         else{
@@ -182,6 +183,21 @@ void showMain()
          tft180_show_int(70, 30, adc_MAX[1], 4);
 		 tft180_show_int(70, 45, adc_MAX[2], 4);
 		 tft180_show_int(70, 60, adc_MAX[3], 4);
-		 tft180_show_float(50, 75, offset,4, 1);
+		 tft180_show_float(50, 85, offset,4, 1);
+        }
+    if(pages==2){
+        if(first==true){
+            tft180_clear();
+            tft180_show_string(20, 0, "ADC_Info");
+            tft180_show_string(0, 15, "ADCNOM1:");
+	        tft180_show_string(0, 30, "ADCNOM2:");
+	        tft180_show_string(0, 45, "ADCNOM3:");
+	        tft180_show_string(0, 60, "ADCNOM4:");
+             first=false;
+        }
+         tft180_show_float(70, 15, adc_normal_buffer[0], 4,1);
+         tft180_show_float(70, 30, adc_normal_buffer[1], 4,1);
+		 tft180_show_float(70, 45, adc_normal_buffer[2], 4,1);
+		 tft180_show_float(70, 60, adc_normal_buffer[3], 4,1);
     }
 }

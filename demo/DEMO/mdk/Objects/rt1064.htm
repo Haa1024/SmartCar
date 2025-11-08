@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\rt1064.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\rt1064.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Sun Oct 26 00:00:50 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Sat Nov  8 13:49:52 2025
 <BR><P>
-<H3>Maximum Stack Usage =       1120 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       1144 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 <P>
@@ -2352,11 +2352,11 @@ Global Symbols
 <LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPSPI_CombineWriteData
 <LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPSPI_SeparateReadData
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetDiv
 <LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetMux
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SAI3_RX_DriverIRQHandler
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SAI3_TX_DriverIRQHandler
+<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
 </UL>
 
 <P><STRONG><a name="[1c6]"></a>adc_convert</STRONG> (Thumb, 116 bytes, Stack size 24 bytes, zf_driver_adc.o(.text.adc_convert))
@@ -2396,7 +2396,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IOMUXC_SetPinConfig
 <LI><a href="#[1cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IOMUXC_SetPinMux
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_iomuxc
+<BR>[Called By]<UL><LI><a href="#[1fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_iomuxc
 <LI><a href="#[1e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;qtimer_iomuxc
 <LI><a href="#[21b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_iomuxc
 <LI><a href="#[208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;spi_iomuxc
@@ -2421,7 +2421,7 @@ Global Symbols
 <LI><a href="#[1d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_output
 <LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_protective_handler
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_iomuxc
+<BR>[Called By]<UL><LI><a href="#[1fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_iomuxc
 <LI><a href="#[1e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;qtimer_iomuxc
 <LI><a href="#[1e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;func_double_to_str
 <LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;func_uint_to_str
@@ -2583,17 +2583,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[206]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_uint
 </UL>
 
-<P><STRONG><a name="[1eb]"></a>get_adc</STRONG> (Thumb, 324 bytes, Stack size 16 bytes, get_data.o(.text.get_adc))
-<BR><BR>[Stack]<UL><LI>Max Depth = 648<LI>Call Chain = get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<P><STRONG><a name="[1eb]"></a>get_adc</STRONG> (Thumb, 590 bytes, Stack size 32 bytes, get_data.o(.text.get_adc))
+<BR><BR>[Stack]<UL><LI>Max Depth = 664<LI>Call Chain = get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc_convert
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_data
-<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
 </UL>
 
 <P><STRONG><a name="[1ec]"></a>get_data</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, get_data.o(.text.get_data))
-<BR><BR>[Stack]<UL><LI>Max Depth = 656<LI>Call Chain = get_data &rArr; get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<BR><BR>[Stack]<UL><LI>Max Depth = 672<LI>Call Chain = get_data &rArr; get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_adc
 <LI><a href="#[1ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_encoder
@@ -2643,7 +2642,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ClearPinsOutput
 <LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetPinsOutput
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_speed_pwm
+<BR>[Called By]<UL><LI><a href="#[1fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_speed_pwm
 </UL>
 
 <P><STRONG><a name="[1a0]"></a>gps_uart_callback</STRONG> (Thumb, 314 bytes, Stack size 40 bytes, zf_device_gps_tau1201.o(.text.gps_uart_callback))
@@ -2686,15 +2685,15 @@ Global Symbols
 <P><STRONG><a name="[203]"></a>key_clear_state</STRONG> (Thumb, 26 bytes, Stack size 4 bytes, zf_device_key.o(.text.key_clear_state))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = key_clear_state
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
-<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
+<BR>[Called By]<UL><LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
+<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
 <P><STRONG><a name="[202]"></a>key_get_state</STRONG> (Thumb, 24 bytes, Stack size 4 bytes, zf_device_key.o(.text.key_get_state))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = key_get_state
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
-<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
+<BR>[Called By]<UL><LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
+<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
 <P><STRONG><a name="[180]"></a>key_init</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, zf_device_key.o(.text.key_init))
@@ -2722,11 +2721,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_All
 </UL>
 
-<P><STRONG><a name="[a9]"></a>main</STRONG> (Thumb, 78 bytes, Stack size 8 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1120<LI>Call Chain = main &rArr; showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<P><STRONG><a name="[a9]"></a>main</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, main.o(.text.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1144<LI>Call Chain = main &rArr; showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
-<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
+<BR>[Calls]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 <LI><a href="#[1f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;key_scanner
 <LI><a href="#[1f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_init
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_GetFreq
@@ -2740,8 +2738,8 @@ Global Symbols
 <P><STRONG><a name="[1ab]"></a>pit_handler</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, main.o(.text.pit_handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 696<LI>Call Chain = pit_handler &rArr; set_speed_pwm &rArr; pwm_set_duty &rArr;  debug_assert_handler (Cycle)
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_speed_pwm
-<LI><a href="#[1fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_servo_pwm
+<BR>[Calls]<UL><LI><a href="#[1fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_speed_pwm
+<LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_servo_pwm
 <LI><a href="#[1ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_data
 </UL>
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_IRQHandler
@@ -2753,11 +2751,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_Deinit
 <LI><a href="#[1ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_Init
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableIRQ
-<LI><a href="#[1fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_SetTimerChainMode
-<LI><a href="#[1fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_EnableInterrupts
+<LI><a href="#[1fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_SetTimerChainMode
+<LI><a href="#[1fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_EnableInterrupts
 <LI><a href="#[1ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_SetTimerPeriod
 <LI><a href="#[1a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_GetDefaultConfig
-<LI><a href="#[1fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_StartTimer
+<LI><a href="#[1fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PIT_StartTimer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -2769,9 +2767,9 @@ Global Symbols
 <LI><a href="#[1ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Deinit
 <LI><a href="#[1b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_Init
 <LI><a href="#[1b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_GetDefaultConfig
-<LI><a href="#[1ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_iomuxc
-<LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_StartTimer
-<LI><a href="#[200]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetPwmLdok
+<LI><a href="#[1fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_iomuxc
+<LI><a href="#[200]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_StartTimer
+<LI><a href="#[1ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetPwmLdok
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_assert_handler
 <LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_set_duty
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_GetFreq
@@ -2779,7 +2777,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init_All
 </UL>
 
-<P><STRONG><a name="[1ff]"></a>pwm_iomuxc</STRONG> (Thumb, 1744 bytes, Stack size 32 bytes, zf_driver_pwm.o(.text.pwm_iomuxc))
+<P><STRONG><a name="[1fe]"></a>pwm_iomuxc</STRONG> (Thumb, 1744 bytes, Stack size 32 bytes, zf_driver_pwm.o(.text.pwm_iomuxc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 736<LI>Call Chain = pwm_iomuxc &rArr; debug_assert_handler &rArr; debug_protective_handler &rArr; pwm_set_duty &rArr;  debug_assert_handler (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1ca]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;afio_init
@@ -2793,12 +2791,12 @@ Global Symbols
 <LI>Call Chain = pwm_set_duty &rArr;  debug_assert_handler (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_UpdatePwmDutycycleHighAccuracy
-<LI><a href="#[200]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetPwmLdok
+<LI><a href="#[1ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PWM_SetPwmLdok
 <LI><a href="#[1c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_assert_handler
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;debug_protective_handler
-<LI><a href="#[1fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_speed_pwm
-<LI><a href="#[1fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_servo_pwm
+<LI><a href="#[1fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_speed_pwm
+<LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_servo_pwm
 <LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_init
 </UL>
 
@@ -2811,17 +2809,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;encoder_quad_init
 </UL>
 
-<P><STRONG><a name="[1f8]"></a>reset_offset</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, get_data.o(.text.reset_offset))
-<BR><BR>[Stack]<UL><LI>Max Depth = 656<LI>Call Chain = reset_offset &rArr; get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<P><STRONG><a name="[201]"></a>reset_offset</STRONG> (Thumb, 236 bytes, Stack size 32 bytes, get_data.o(.text.reset_offset))
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = reset_offset &rArr; key_clear_state
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_adc
-<LI><a href="#[203]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;key_clear_state
+<BR>[Calls]<UL><LI><a href="#[203]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;key_clear_state
 <LI><a href="#[202]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;key_get_state
 </UL>
-<BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<BR>[Called By]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
-<P><STRONG><a name="[1fa]"></a>set_servo_pwm</STRONG> (Thumb, 376 bytes, Stack size 24 bytes, servo_control.o(.text.set_servo_pwm))
+<P><STRONG><a name="[1f9]"></a>set_servo_pwm</STRONG> (Thumb, 376 bytes, Stack size 24 bytes, servo_control.o(.text.set_servo_pwm))
 <BR><BR>[Stack]<UL><LI>Max Depth = 688<LI>Call Chain = set_servo_pwm &rArr; pwm_set_duty &rArr;  debug_assert_handler (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_set_duty
@@ -2829,7 +2826,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_handler
 </UL>
 
-<P><STRONG><a name="[1fb]"></a>set_speed_pwm</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, speed_control.o(.text.set_speed_pwm))
+<P><STRONG><a name="[1fa]"></a>set_speed_pwm</STRONG> (Thumb, 100 bytes, Stack size 24 bytes, speed_control.o(.text.set_speed_pwm))
 <BR><BR>[Stack]<UL><LI>Max Depth = 688<LI>Call Chain = set_speed_pwm &rArr; pwm_set_duty &rArr;  debug_assert_handler (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpio_set_level
@@ -2838,8 +2835,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_handler
 </UL>
 
-<P><STRONG><a name="[1f9]"></a>showMain</STRONG> (Thumb, 710 bytes, Stack size 48 bytes, main.o(.text.showMain))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1112<LI>Call Chain = showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<P><STRONG><a name="[1f8]"></a>showMain</STRONG> (Thumb, 952 bytes, Stack size 72 bytes, main.o(.text.showMain))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1136<LI>Call Chain = showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[206]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_uint
 <LI><a href="#[205]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_float
@@ -2848,6 +2845,7 @@ Global Symbols
 <LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_clear
 <LI><a href="#[203]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;key_clear_state
 <LI><a href="#[202]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;key_get_state
+<LI><a href="#[201]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -2949,7 +2947,7 @@ Global Symbols
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ClearPinsOutput
 </UL>
 <BR>[Called By]<UL><LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_init
-<LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
+<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> zf_device_tft180.o(.text.tft180_debug_init)
 </UL>
@@ -3015,7 +3013,7 @@ Global Symbols
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_string
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
+<BR>[Called By]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
 <P><STRONG><a name="[204]"></a>tft180_show_int</STRONG> (Thumb, 260 bytes, Stack size 56 bytes, zf_device_tft180.o(.text.tft180_show_int))
@@ -3026,7 +3024,7 @@ Global Symbols
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_string
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
+<BR>[Called By]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
 <P><STRONG><a name="[e2]"></a>tft180_show_string</STRONG> (Thumb, 220 bytes, Stack size 32 bytes, zf_device_tft180.o(.text.tft180_show_string))
@@ -3038,7 +3036,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[206]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_uint
 <LI><a href="#[205]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_float
 <LI><a href="#[204]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_int
-<LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
+<LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> zf_device_tft180.o(.text.tft180_debug_init)
 </UL>
@@ -3050,7 +3048,7 @@ Global Symbols
 <LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_string
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
+<BR>[Called By]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
 <P><STRONG><a name="[e5]"></a>type_default_callback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, zf_device_type.o(.text.type_default_callback))
@@ -3443,7 +3441,7 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ReadPadStatus
 </UL>
 
-<P><STRONG><a name="[1fe]"></a>PIT_StartTimer</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, zf_driver_pit.o(.text.PIT_StartTimer))
+<P><STRONG><a name="[1fd]"></a>PIT_StartTimer</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, zf_driver_pit.o(.text.PIT_StartTimer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PIT_StartTimer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_init
@@ -3465,13 +3463,13 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[1f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_init
 </UL>
 
-<P><STRONG><a name="[1fc]"></a>PIT_EnableInterrupts</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, zf_driver_pit.o(.text.PIT_EnableInterrupts))
+<P><STRONG><a name="[1fb]"></a>PIT_EnableInterrupts</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, zf_driver_pit.o(.text.PIT_EnableInterrupts))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = PIT_EnableInterrupts
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_init
 </UL>
 
-<P><STRONG><a name="[1fd]"></a>PIT_SetTimerChainMode</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, zf_driver_pit.o(.text.PIT_SetTimerChainMode))
+<P><STRONG><a name="[1fc]"></a>PIT_SetTimerChainMode</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, zf_driver_pit.o(.text.PIT_SetTimerChainMode))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PIT_SetTimerChainMode
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_init
@@ -3491,14 +3489,14 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EnableIRQ
 </UL>
 
-<P><STRONG><a name="[200]"></a>PWM_SetPwmLdok</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, zf_driver_pwm.o(.text.PWM_SetPwmLdok))
+<P><STRONG><a name="[1ff]"></a>PWM_SetPwmLdok</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, zf_driver_pwm.o(.text.PWM_SetPwmLdok))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_SetPwmLdok
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_set_duty
 <LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_init
 </UL>
 
-<P><STRONG><a name="[201]"></a>PWM_StartTimer</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, zf_driver_pwm.o(.text.PWM_StartTimer))
+<P><STRONG><a name="[200]"></a>PWM_StartTimer</STRONG> (Thumb, 34 bytes, Stack size 8 bytes, zf_driver_pwm.o(.text.PWM_StartTimer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = PWM_StartTimer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_init
