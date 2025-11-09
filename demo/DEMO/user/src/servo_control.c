@@ -11,9 +11,9 @@ struct pid_t{
 
 /* 舵机 PID 实例 */
 struct pid_t servo = {
-    .kp = 0.14f,
-    .ki = 0.005f,  
-    .kd = 0.003f,
+    .kp = 5.0f,
+    .ki = 0.1f,  
+    .kd = 0.2f,
     .err = 0,
     .err_last = 0,
     .integral = 0,
@@ -26,6 +26,9 @@ const float INTEGRAL_MAX = 200.0f;   // 对应 PWM 占空差值
 float servo_motor_angle = SERVO_MOTOR_M; 
 //PID系数kp
 extern float adc_error;
+
+//误差比例系数
+float p=1.0f;
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     设置舵机PWM
@@ -52,7 +55,7 @@ extern float adc_error;
 void set_servo_pwm(void)
 {
     /* 读误差 */
-    servo.err = adc_error;
+    servo.err = -adc_error*p;
 
     /* 积分项 + 限幅 */
     servo.integral += servo.err * servo.dt;
@@ -69,12 +72,13 @@ void set_servo_pwm(void)
                   + servo.kd * derivative;
 
     /* 把 pid_out 映射到舵机角度 */
-    servo_motor_angle =SERVO_MOTOR_M + pid_out;
+    servo_motor_angle =SERVO_MOTOR_M - pid_out - 0.1;
+    servo_motor_angle=servo_motor_angle*1;
 
     /* 限幅 */
     if (servo_motor_angle > SERVO_MOTOR_R_MAX) servo_motor_angle = SERVO_MOTOR_R_MAX;
     if (servo_motor_angle < SERVO_MOTOR_L_MAX) servo_motor_angle = SERVO_MOTOR_L_MAX;
-
+  
     /* 舵机转向 */
     uint32 duty = (uint32)SERVO_MOTOR_DUTY(servo_motor_angle);
     pwm_set_duty(SERVO_MOTOR1_PWM, duty);

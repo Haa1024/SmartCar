@@ -48,16 +48,28 @@ extern float adc_normal_buffer[ADC_CHANNEL_NUMBER];
 extern int16 encoder_data_1;
 extern int16 encoder_data_2;
 extern float adc_error;
-extern int8 duty;	
-extern uint16_t adc_MAX[4];
-extern int16 offset;
+extern int8 duty;
 extern void reset_offset();
 
+struct pid_t{
+    float kp, ki, kd;
+    float err;       // 本次误差
+    float err_last;  // 上次误差
+    float integral;  // 积分累加
+    float dt;        // 调用周期，单位 s
+} ;
+
+extern struct pid_t servo;
+extern float p;	
+
 int8 pages = 0;
+int8 select = 0;
+
 bool first = true;
 
 void Init_All(void);
 void showMain(void);
+
 
 int main(void)
 {
@@ -131,8 +143,7 @@ void pit_handler (void)
 //主菜单显示
 void showMain()
 {
-    reset_offset();
-    if(key_get_state(KEY_2)==KEY_SHORT_PRESS)
+    if(key_get_state(KEY_1)==KEY_SHORT_PRESS)
     {
         if(pages==2){
             pages=0;
@@ -140,13 +151,13 @@ void showMain()
         else{
             pages++;
         }
-        key_clear_state(KEY_2);
+        key_clear_state(KEY_1);
         first=true;
     }
     if(pages==0){
         if(first==true){
            tft180_clear();
-           tft180_show_string(20, 0, "Basic_Info");
+           tft180_show_string(20, 0, "Basic-Info");
 	       tft180_show_string(0, 15, "ADC1:");
 	       tft180_show_string(0, 30, "ADC2:");
 	       tft180_show_string(0, 45, "ADC3:");
@@ -154,8 +165,6 @@ void showMain()
 	       tft180_show_string(0, 75, "ERROR");
 	       tft180_show_string(0, 90, "ENCODER-L:");
            tft180_show_string(0, 105, "ENCODER-R:");
-           tft180_show_string(0, 120, "DUTY:");
-            
            first=false;
         }
         tft180_show_int(50, 15, adc_buffer[0], 4);
@@ -165,39 +174,99 @@ void showMain()
 		tft180_show_float(50, 75, adc_error, 4, 1);
 		tft180_show_int(80, 90, encoder_data_1, 4);
         tft180_show_int(80, 105, encoder_data_2, 4);
-		tft180_show_uint(50, 120, duty, 3);
     }
     if(pages==1){
         if(first==true){
             tft180_clear();
-            tft180_show_string(20, 0, "ADC_Info");
-            tft180_show_string(0, 15, "ADCMAX1:");
-	        tft180_show_string(0, 30, "ADCMAX2:");
-	        tft180_show_string(0, 45, "ADCMAX3:");
-	        tft180_show_string(0, 60, "ADCMAX4:");
-            tft180_show_string(0, 75, "offset:");
-            
-             first=false;
-        }
-         tft180_show_int(70, 15, adc_MAX[0], 4);
-         tft180_show_int(70, 30, adc_MAX[1], 4);
-		 tft180_show_int(70, 45, adc_MAX[2], 4);
-		 tft180_show_int(70, 60, adc_MAX[3], 4);
-		 tft180_show_float(50, 85, offset,4, 1);
-        }
-    if(pages==2){
-        if(first==true){
-            tft180_clear();
-            tft180_show_string(20, 0, "ADC_Info");
+            tft180_show_string(20, 0, "ADC-Info");
             tft180_show_string(0, 15, "ADCNOM1:");
 	        tft180_show_string(0, 30, "ADCNOM2:");
 	        tft180_show_string(0, 45, "ADCNOM3:");
 	        tft180_show_string(0, 60, "ADCNOM4:");
+            
              first=false;
         }
          tft180_show_float(70, 15, adc_normal_buffer[0], 4,1);
          tft180_show_float(70, 30, adc_normal_buffer[1], 4,1);
 		 tft180_show_float(70, 45, adc_normal_buffer[2], 4,1);
 		 tft180_show_float(70, 60, adc_normal_buffer[3], 4,1);
-    }
+        }
+     if(pages==2){
+         
+          if(first==true){
+            tft180_clear();
+            tft180_show_string(20, 0, "Value-Set");
+            tft180_show_string(8, 15, "Reset-offset");
+	        tft180_show_string(8, 30, "Duty");
+	        tft180_show_string(8, 45, "PID-kp");
+	        tft180_show_string(8, 60, "PID-kd");
+            tft180_show_string(8, 75, "error-p");
+            first=false;
+            tft180_show_string(0, 15+select*15, ">");
+        }
+         tft180_show_int(75, 30, duty, 4);
+		 tft180_show_float(75, 45, servo.kp, 4,1);
+		 tft180_show_float(75, 60, servo.kd, 4,1);
+         tft180_show_float(75, 75, p, 4,1);
+        
+        //按下第二个键时修改选中项
+         if(key_get_state(KEY_2)==KEY_SHORT_PRESS)
+         {
+             if(select==4)
+             {
+                 select=0;
+             }
+             else
+             { 
+                 select++;
+             }
+              key_clear_state(KEY_2);
+              first=true;
+         }
+         
+         if(key_get_state(KEY_3)==KEY_SHORT_PRESS)
+         {
+             switch(select)
+             {
+                 case 0: 
+                     reset_offset();
+                     break;
+                 case 1:
+                     duty+=5;
+                     break;
+                 case 2:
+                     servo.kp +=0.5;
+                     break;
+                 case 3:
+                     servo.kd +=0.1;
+                     break;
+                 case 4:
+                     p+=0.1f;
+                     break;
+             }
+              key_clear_state(KEY_3);
+         }
+         if(key_get_state(KEY_4)==KEY_SHORT_PRESS)
+         {
+             switch(select)
+             {
+                 case 0: 
+                     reset_offset();
+                     break;
+                 case 1:
+                     duty-=5;
+                     break;
+                 case 2:
+                     servo.kp -=0.5;
+                     break;
+                 case 3:
+                     servo.kd -=0.1;
+                     break;
+                 case 4:
+                     p-=0.1f;
+                     break;
+             }
+              key_clear_state(KEY_4);
+         }
+   }
 }

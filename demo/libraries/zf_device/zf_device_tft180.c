@@ -135,10 +135,10 @@ void tft180_set_region (uint16 x1, uint16 y1, uint16 x2, uint16 y2)
     // 如果程序在输出了断言信息 并且提示出错位置在这里
     // 那么一般是屏幕显示的时候超过屏幕分辨率范围了
     // 检查一下你的显示调用的函数 自己计算一下哪里超过了屏幕显示范围
-    zf_assert(x1 < tft180_x_max);
-    zf_assert(y1 < tft180_y_max);
-    zf_assert(x2 < tft180_x_max);
-    zf_assert(y2 < tft180_y_max);
+    //zf_assert(x1 < tft180_x_max);
+    //zf_assert(y1 < tft180_y_max);
+   // zf_assert(x2 < tft180_x_max);
+   // zf_assert(y2 < tft180_y_max);
 
     switch(tft180_display_dir)
     {

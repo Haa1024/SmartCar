@@ -2,7 +2,7 @@
 #include "my_common.h"
 
 //控制电机速度，可取0-100，若太大可调低，若使用3S电池，占空比应限幅60%，默认10%
-int8 duty = 60;	
+int8 duty = 15;	
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     设置电机PWM
@@ -23,10 +23,5 @@ void set_speed_pwm()
 	gpio_set_level(MOTOR2_DIR, GPIO_LOW);                                   // DIR输出高电平
 	pwm_set_duty(MOTOR2_PWM, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
 
-	//gpio_set_level(MOTOR3_DIR, GPIO_HIGH);                                   // DIR输出高电平
-	//pwm_set_duty(MOTOR3_PWM, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
-
-	//gpio_set_level(MOTOR4_DIR, GPIO_HIGH);                                   // DIR输出高电平
-	//pwm_set_duty(MOTOR4_PWM, duty * (PWM_DUTY_MAX / 100));                   // 计算占空比
 }
 

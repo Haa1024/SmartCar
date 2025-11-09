@@ -1,5 +1,6 @@
 #include "zf_common_headfile.h"
 #include "my_common.h"
+#include "math.h"
 
 //定义存放编码器数值的变量
 int16 encoder_data_1 = 0;
@@ -16,22 +17,24 @@ adc_channel_enum channel_list[ADC_CHANNEL_NUMBER] =
 
 uint16_t adc_buffer[ADC_CHANNEL_NUMBER];
 
+//记录对应通道偏置值
+uint16_t adc_offset[ADC_CHANNEL_NUMBER]={0};
+
 //储存归一化后的电感值
 float adc_normal_buffer[ADC_CHANNEL_NUMBER];
 
 //定义差比和差公式中的系数
 
-float coef_A = 1;
-float coef_B = 1;
-float coef_C = 1;
+float coef_A = 1.0;
+float coef_B = 1.0;
+float coef_C = 1.0;
 
 //能测量到最大的电感值
-uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={1};
+uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={3726,3725,2867,3793};
 
 //根据电感数值计算得到的误差值
 float adc_error;
 
-float offset = 0;
 
 //-------------------------- 滤波参数优化 --------------------------
 // 滑动平均滤波窗口大小（越大滤波效果越强，响应越慢，建议5-10）
@@ -91,10 +94,6 @@ void get_adc()
     {   
         // 1. 读取新的ADC采样值
         uint16_t new_adc = adc_convert(channel_list[channel_index]);   
-        if(adc_MAX[channel_index]<new_adc)
-        {
-            adc_MAX[channel_index]=new_adc;
-        }
         // 2. 更新历史数据缓冲区：移除最旧的值，加入新值
         // 减去缓冲区中最旧的数据（索引位置的上一个值）
         adc_history_sum[channel_index] -= adc_history[channel_index][adc_history_index[channel_index]];
@@ -111,11 +110,24 @@ void get_adc()
     //计算归一化后的电感值
     for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
     {
-        adc_normal_buffer[channel_index]=(float)((float)adc_buffer[channel_index]/(float)adc_MAX[channel_index]);
+        if(adc_buffer[channel_index]==0||adc_buffer[channel_index]<=adc_offset[channel_index])
+        {
+            adc_normal_buffer[channel_index]=0.0f;
+        }
+        else
+        {
+            float upper =(float)adc_buffer[channel_index]-(float)adc_offset[channel_index];
+            float lower = (float)adc_MAX[channel_index];
+            adc_normal_buffer[channel_index]=upper/lower;
+        }
     }
     
     // 计算误差值
-    adc_error = ((coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3]) + coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])))/(coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+func_abs(adc_normal_buffer[1] - adc_normal_buffer[2]))+offset;
+    float upper=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2]);
+    float lower=coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+fabs(adc_normal_buffer[1] - adc_normal_buffer[2])*coef_C+0.01f;
+        
+    adc_error = upper/lower;
+    
 }
 	
 
@@ -131,10 +143,8 @@ void get_data()
 
 void reset_offset()
 {
-    if(key_get_state(KEY_1)==KEY_SHORT_PRESS)
+    for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
     {
-        offset = -(((coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3]) + coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])))/(coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+coef_C*func_abs(adc_normal_buffer[1] - adc_normal_buffer[2])));
-        key_clear_state(KEY_1);
+          adc_offset[channel_index]=adc_buffer[channel_index];
     }
-    
 }
