@@ -1,5 +1,8 @@
 #include "zf_common_headfile.h"
 #include "my_common.h"
+
+extern bool reset;
+
 /* PID 结构体 */
 struct pid_t{
     float kp, ki, kd;
@@ -11,9 +14,9 @@ struct pid_t{
 
 /* 舵机 PID 实例 */
 struct pid_t servo = {
-    .kp = 5.0f,
+    .kp = 1.1f,
     .ki = 0.1f,  
-    .kd = 0.2f,
+    .kd = 0.005f,
     .err = 0,
     .err_last = 0,
     .integral = 0,
@@ -28,7 +31,7 @@ float servo_motor_angle = SERVO_MOTOR_M;
 extern float adc_error;
 
 //误差比例系数
-float p=1.0f;
+float p=10.0f;
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     设置舵机PWM
@@ -54,6 +57,12 @@ float p=1.0f;
 */
 void set_servo_pwm(void)
 {
+    if(reset==false){
+        servo.ki=0.0f;
+    }
+    else{
+         servo.ki=0.1f;
+    }
     /* 读误差 */
     servo.err = -adc_error*p;
 

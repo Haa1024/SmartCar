@@ -50,6 +50,7 @@ extern int16 encoder_data_2;
 extern float adc_error;
 extern int8 duty;
 extern void reset_offset();
+bool reset = false;
 
 struct pid_t{
     float kp, ki, kd;
@@ -186,10 +187,10 @@ void showMain()
             
              first=false;
         }
-         tft180_show_float(70, 15, adc_normal_buffer[0], 4,1);
-         tft180_show_float(70, 30, adc_normal_buffer[1], 4,1);
-		 tft180_show_float(70, 45, adc_normal_buffer[2], 4,1);
-		 tft180_show_float(70, 60, adc_normal_buffer[3], 4,1);
+         tft180_show_float(70, 15, adc_normal_buffer[0], 4,2);
+         tft180_show_float(70, 30, adc_normal_buffer[1], 4,2);
+		 tft180_show_float(70, 45, adc_normal_buffer[2], 4,2);
+		 tft180_show_float(70, 60, adc_normal_buffer[3], 4,2);
         }
      if(pages==2){
          
@@ -205,8 +206,8 @@ void showMain()
             tft180_show_string(0, 15+select*15, ">");
         }
          tft180_show_int(75, 30, duty, 4);
-		 tft180_show_float(75, 45, servo.kp, 4,1);
-		 tft180_show_float(75, 60, servo.kd, 4,1);
+		 tft180_show_float(75, 45, servo.kp, 2,3);
+		 tft180_show_float(75, 60, servo.kd, 2,3);
          tft180_show_float(75, 75, p, 4,1);
         
         //按下第二个键时修改选中项
@@ -230,15 +231,16 @@ void showMain()
              {
                  case 0: 
                      reset_offset();
+                     reset = true;
                      break;
                  case 1:
                      duty+=5;
                      break;
                  case 2:
-                     servo.kp +=0.5;
+                     servo.kp +=0.1f;
                      break;
                  case 3:
-                     servo.kd +=0.1;
+                     servo.kd +=0.001f;
                      break;
                  case 4:
                      p+=0.1f;
@@ -252,15 +254,16 @@ void showMain()
              {
                  case 0: 
                      reset_offset();
+                     reset = true;
                      break;
                  case 1:
                      duty-=5;
                      break;
                  case 2:
-                     servo.kp -=0.5;
+                     servo.kp -=0.1f;
                      break;
                  case 3:
-                     servo.kd -=0.1;
+                     servo.kd -=0.001f;
                      break;
                  case 4:
                      p-=0.1f;
