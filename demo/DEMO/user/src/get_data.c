@@ -18,22 +18,23 @@ adc_channel_enum channel_list[ADC_CHANNEL_NUMBER] =
 uint16_t adc_buffer[ADC_CHANNEL_NUMBER];
 
 //记录对应通道偏置值
-uint16_t adc_offset[ADC_CHANNEL_NUMBER]={0};
+float adc_offset=0.0;
 
 //储存归一化后的电感值
 float adc_normal_buffer[ADC_CHANNEL_NUMBER];
 
 //定义差比和差公式中的系数
 
-float coef_A = 1.0;
-float coef_B = 1.0;
-float coef_C = 1.0;
+float coef_A = 2.0;
+float coef_B = 2.5;
+float coef_C = 2.0;
 
 //能测量到最大的电感值
 uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={3726,3725,2867,3793};
 
 //根据电感数值计算得到的误差值
 float adc_error;
+float adc_error_former;
 
 
 //-------------------------- 滤波参数优化 --------------------------
@@ -110,23 +111,20 @@ void get_adc()
     //计算归一化后的电感值
     for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
     {
-        if(adc_buffer[channel_index]==0||adc_buffer[channel_index]<=adc_offset[channel_index])
-        {
-            adc_normal_buffer[channel_index]=0.0f;
-        }
-        else
-        {
-            float upper =(float)adc_buffer[channel_index]-(float)adc_offset[channel_index];
+            float upper =(float)adc_buffer[channel_index];
             float lower = (float)adc_MAX[channel_index];
             adc_normal_buffer[channel_index]=upper/lower;
-        }
     }
     
     // 计算误差值
-    float upper=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2]);
+    float upper=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])+0.0001f-adc_offset;
     float lower=coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+fabs(adc_normal_buffer[1] - adc_normal_buffer[2])*coef_C+0.01f;
         
+    adc_error_former=adc_error;
     adc_error = upper/lower;
+    if(fabs(adc_error-adc_error_former)>0.3f){
+        adc_error=(adc_error+adc_error_former)/2.0;
+    }
     
 }
 	
@@ -145,6 +143,6 @@ void reset_offset()
 {
     for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
     {
-          adc_offset[channel_index]=adc_buffer[channel_index];
+          adc_offset=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2]);
     }
 }

@@ -187,10 +187,10 @@ void showMain()
             
              first=false;
         }
-         tft180_show_float(70, 15, adc_normal_buffer[0], 4,2);
-         tft180_show_float(70, 30, adc_normal_buffer[1], 4,2);
-		 tft180_show_float(70, 45, adc_normal_buffer[2], 4,2);
-		 tft180_show_float(70, 60, adc_normal_buffer[3], 4,2);
+         tft180_show_float(70, 15, adc_normal_buffer[0], 1,4);
+         tft180_show_float(70, 30, adc_normal_buffer[1], 1,4);
+		 tft180_show_float(70, 45, adc_normal_buffer[2], 1,4);
+		 tft180_show_float(70, 60, adc_normal_buffer[3], 1,4);
         }
      if(pages==2){
          

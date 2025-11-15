@@ -58,10 +58,10 @@ float p=10.0f;
 void set_servo_pwm(void)
 {
     if(reset==false){
-        servo.ki=0.0f;
+        servo.ki=0.01f;
     }
     else{
-         servo.ki=0.1f;
+         servo.ki=0.01f;
     }
     /* ∂¡ŒÛ≤Ó */
     servo.err = -adc_error*p;

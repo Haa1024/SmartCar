@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\rt1064.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\rt1064.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Wed Nov 12 18:28:19 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Sat Nov 15 17:10:30 2025
 <BR><P>
 <H3>Maximum Stack Usage =       1152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2571,8 +2571,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[203]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_int
 </UL>
 
-<P><STRONG><a name="[1ea]"></a>get_adc</STRONG> (Thumb, 656 bytes, Stack size 40 bytes, get_data.o(.text.get_adc))
-<BR><BR>[Stack]<UL><LI>Max Depth = 672<LI>Call Chain = get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<P><STRONG><a name="[1ea]"></a>get_adc</STRONG> (Thumb, 664 bytes, Stack size 48 bytes, get_data.o(.text.get_adc))
+<BR><BR>[Stack]<UL><LI>Max Depth = 680<LI>Call Chain = get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;adc_convert
 <LI><a href="#[1eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fabs
@@ -2581,7 +2581,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1ec]"></a>get_data</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, get_data.o(.text.get_data))
-<BR><BR>[Stack]<UL><LI>Max Depth = 680<LI>Call Chain = get_data &rArr; get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<BR><BR>[Stack]<UL><LI>Max Depth = 688<LI>Call Chain = get_data &rArr; get_adc &rArr; adc_convert &rArr; ADC_SetChannelConfig &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_adc
 <LI><a href="#[1ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_encoder
@@ -2796,11 +2796,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;encoder_quad_init
 </UL>
 
-<P><STRONG><a name="[205]"></a>reset_offset</STRONG> (Thumb, 84 bytes, Stack size 0 bytes, get_data.o(.text.reset_offset))
+<P><STRONG><a name="[205]"></a>reset_offset</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, get_data.o(.text.reset_offset))
 <BR><BR>[Called By]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
-<P><STRONG><a name="[1f9]"></a>set_servo_pwm</STRONG> (Thumb, 464 bytes, Stack size 24 bytes, servo_control.o(.text.set_servo_pwm))
+<P><STRONG><a name="[1f9]"></a>set_servo_pwm</STRONG> (Thumb, 472 bytes, Stack size 24 bytes, servo_control.o(.text.set_servo_pwm))
 <BR><BR>[Stack]<UL><LI>Max Depth = 688<LI>Call Chain = set_servo_pwm &rArr; pwm_set_duty &rArr;  debug_assert_handler (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_set_duty
