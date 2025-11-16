@@ -48,20 +48,13 @@ extern float adc_normal_buffer[ADC_CHANNEL_NUMBER];
 extern int16 encoder_data_1;
 extern int16 encoder_data_2;
 extern float adc_error;
-extern int8 duty;
+extern int8 duty_straight;
+extern int8 duty_circle;
 extern void reset_offset();
 bool reset = false;
-
-struct pid_t{
-    float kp, ki, kd;
-    float err;       // 本次误差
-    float err_last;  // 上次误差
-    float integral;  // 积分累加
-    float dt;        // 调用周期，单位 s
-} ;
-
-extern struct pid_t servo;
-extern float p;	
+extern float kp_straight;
+extern float kp_circle;
+extern float p;
 
 int8 pages = 0;
 int8 select = 0;
@@ -155,7 +148,7 @@ void showMain()
         key_clear_state(KEY_1);
         first=true;
     }
-    if(pages==0){
+    if(pages==1){
         if(first==true){
            tft180_clear();
            tft180_show_string(20, 0, "Basic-Info");
@@ -176,7 +169,7 @@ void showMain()
 		tft180_show_int(80, 90, encoder_data_1, 4);
         tft180_show_int(80, 105, encoder_data_2, 4);
     }
-    if(pages==1){
+    if(pages==2){
         if(first==true){
             tft180_clear();
             tft180_show_string(20, 0, "ADC-Info");
@@ -192,28 +185,30 @@ void showMain()
 		 tft180_show_float(70, 45, adc_normal_buffer[2], 1,4);
 		 tft180_show_float(70, 60, adc_normal_buffer[3], 1,4);
         }
-     if(pages==2){
+     if(pages==0){
          
           if(first==true){
             tft180_clear();
             tft180_show_string(20, 0, "Value-Set");
             tft180_show_string(8, 15, "Reset-offset");
-	        tft180_show_string(8, 30, "Duty");
-	        tft180_show_string(8, 45, "PID-kp");
-	        tft180_show_string(8, 60, "PID-kd");
-            tft180_show_string(8, 75, "error-p");
+	        tft180_show_string(8, 30, "Duty-s");
+            tft180_show_string(8, 45, "Duty-c");
+	        tft180_show_string(8, 60, "kp-s");
+            tft180_show_string(8, 75, "kp-c");
+	        tft180_show_string(8, 90, "error-p");
             first=false;
             tft180_show_string(0, 15+select*15, ">");
         }
-         tft180_show_int(75, 30, duty, 4);
-		 tft180_show_float(75, 45, servo.kp, 2,3);
-		 tft180_show_float(75, 60, servo.kd, 2,3);
-         tft180_show_float(75, 75, p, 4,1);
+         tft180_show_int(75, 30, duty_straight, 4);
+		 tft180_show_float(75, 45, duty_circle, 2,3);
+		 tft180_show_float(75, 60, kp_straight, 2,3);
+         tft180_show_float(75, 75, kp_circle, 4,1);
+         tft180_show_float(75, 90, p, 4,1);
         
         //按下第二个键时修改选中项
          if(key_get_state(KEY_2)==KEY_SHORT_PRESS)
          {
-             if(select==4)
+             if(select==5)
              {
                  select=0;
              }
@@ -234,15 +229,18 @@ void showMain()
                      reset = true;
                      break;
                  case 1:
-                     duty+=5;
+                     duty_straight+=1;
                      break;
                  case 2:
-                     servo.kp +=0.1f;
+                     duty_circle+=1;
                      break;
                  case 3:
-                     servo.kd +=0.001f;
+                     kp_straight +=0.05f;
                      break;
                  case 4:
+                     kp_circle +=0.05f;
+                     break;
+                 case 5:
                      p+=0.1f;
                      break;
              }
@@ -252,20 +250,23 @@ void showMain()
          {
              switch(select)
              {
-                 case 0: 
+                case 0: 
                      reset_offset();
                      reset = true;
                      break;
                  case 1:
-                     duty-=5;
+                     duty_straight-=1;
                      break;
                  case 2:
-                     servo.kp -=0.1f;
+                     duty_circle-=1;
                      break;
                  case 3:
-                     servo.kd -=0.001f;
+                     kp_straight -=0.05f;
                      break;
                  case 4:
+                     kp_circle -=0.05f;
+                     break;
+                 case 5:
                      p-=0.1f;
                      break;
              }

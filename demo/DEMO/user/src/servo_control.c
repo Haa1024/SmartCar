@@ -29,10 +29,16 @@ const float INTEGRAL_MAX = 200.0f;   // 对应 PWM 占空差值
 float servo_motor_angle = SERVO_MOTOR_M; 
 //PID系数kp
 extern float adc_error;
-
 //误差比例系数
 float p=10.0f;
-
+//电机占空比设置
+extern int8 duty;
+//直道弯道速度设置
+int8 duty_straight = 25;
+int8 duty_circle = 20;
+//直道弯道Kp值设置
+float kp_straight = 1.1f;
+float kp_circle = 2.4f;
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     设置舵机PWM
 // 参数说明     无
@@ -57,8 +63,19 @@ float p=10.0f;
 */
 void set_servo_pwm(void)
 {
+    //分段pid
+    //当error<0.3时，考虑在直道上行进，并调高车速
+    //当error>=0.3时，考虑在弯道处行进，调高kp，使其更贴近弯道。
+    if(adc_error<0.3){
+        servo.kp=kp_straight;
+        duty = duty_straight;
+    }
+    else{
+        servo.kp=kp_circle;
+        duty = duty_circle;
+    }
     if(reset==false){
-        servo.ki=0.01f;
+        servo.ki=0.0f;
     }
     else{
          servo.ki=0.01f;

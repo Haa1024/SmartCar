@@ -3,9 +3,9 @@
 <title>Static Call Graph - [.\Objects\rt1064.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\rt1064.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Sat Nov 15 17:10:30 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6230001: Last Updated: Sun Nov 16 17:05:15 2025
 <BR><P>
-<H3>Maximum Stack Usage =       1152 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =       1144 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 main &rArr; showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 <P>
@@ -1145,12 +1145,12 @@ Global Symbols
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_InitRcOsc24M
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SwitchOsc
 <LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_InitExternalClk
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetXtalFreq
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetRtcXtalFreq
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_DisableClock
 <LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetDiv
 <LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetPllBypass
 <LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetMux
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetXtalFreq
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetRtcXtalFreq
 </UL>
 <BR>[Called By]<UL><LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOARD_InitBootClocks
 </UL>
@@ -2321,9 +2321,6 @@ Global Symbols
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_GetChannelStatusFlags
 <LI><a href="#[11b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC_GetInstance
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN3_DriverIRQHandler
-<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN2_DriverIRQHandler
-<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN1_DriverIRQHandler
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ENET_GetInstance
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EDMA_HandleIRQ
 <LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EDMA_GetChannelStatusFlags
@@ -2332,6 +2329,9 @@ Global Symbols
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPT_GetInstance
 <LI><a href="#[11d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_GetInstance
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN3_DriverIRQHandler
+<LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN2_DriverIRQHandler
+<LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN1_DriverIRQHandler
 <LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
 <LI><a href="#[1b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QTMR_GetInstance
 <LI><a href="#[127]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
@@ -2351,11 +2351,11 @@ Global Symbols
 <LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPSPI_CombineWriteData
 <LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPSPI_SeparateReadData
 <LI><a href="#[121]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
-<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetDiv
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetMux
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SAI3_RX_DriverIRQHandler
 <LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SAI3_TX_DriverIRQHandler
 <LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_ControlGate
+<LI><a href="#[110]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetDiv
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CLOCK_SetMux
 </UL>
 
 <P><STRONG><a name="[1c6]"></a>adc_convert</STRONG> (Thumb, 116 bytes, Stack size 24 bytes, zf_driver_adc.o(.text.adc_convert))
@@ -2709,7 +2709,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[a9]"></a>main</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, main.o(.text.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1152<LI>Call Chain = main &rArr; showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<BR><BR>[Stack]<UL><LI>Max Depth = 1144<LI>Call Chain = main &rArr; showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 <LI><a href="#[1f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;key_scanner
@@ -2800,7 +2800,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[1f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;showMain
 </UL>
 
-<P><STRONG><a name="[1f9]"></a>set_servo_pwm</STRONG> (Thumb, 472 bytes, Stack size 24 bytes, servo_control.o(.text.set_servo_pwm))
+<P><STRONG><a name="[1f9]"></a>set_servo_pwm</STRONG> (Thumb, 576 bytes, Stack size 24 bytes, servo_control.o(.text.set_servo_pwm))
 <BR><BR>[Stack]<UL><LI>Max Depth = 688<LI>Call Chain = set_servo_pwm &rArr; pwm_set_duty &rArr;  debug_assert_handler (Cycle)
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pwm_set_duty
@@ -2817,8 +2817,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pit_handler
 </UL>
 
-<P><STRONG><a name="[1f8]"></a>showMain</STRONG> (Thumb, 1368 bytes, Stack size 96 bytes, main.o(.text.showMain))
-<BR><BR>[Stack]<UL><LI>Max Depth = 1144<LI>Call Chain = showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
+<P><STRONG><a name="[1f8]"></a>showMain</STRONG> (Thumb, 1452 bytes, Stack size 88 bytes, main.o(.text.showMain))
+<BR><BR>[Stack]<UL><LI>Max Depth = 1136<LI>Call Chain = showMain &rArr; tft180_show_float &rArr; tft180_show_string &rArr; tft180_show_char &rArr; tft180_set_region &rArr; tft180_write_index &rArr; spi_write_8bit &rArr; spi_write_8bit_array &rArr; spi_write &rArr; LPSPI_MasterTransferBlocking &rArr; LPSPI_CheckTransferArgument &rArr; __aeabi_assert &rArr; DbgConsole_Printf &rArr; DbgConsole_Vprintf &rArr; DbgConsole_PrintfFormattedData &rArr; DbgConsole_ConvertFloatRadixNumToString &rArr; __hardfp_pow &rArr; sqrt
 </UL>
 <BR>[Calls]<UL><LI><a href="#[205]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_offset
 <LI><a href="#[204]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tft180_show_float
