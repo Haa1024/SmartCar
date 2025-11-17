@@ -15,13 +15,15 @@ struct pid_t{
 /* 舵机 PID 实例 */
 struct pid_t servo = {
     .kp = 1.1f,
-    .ki = 0.1f,  
-    .kd = 0.005f,
+    .ki = 0.01f,  
+    .kd = 0.05f,
     .err = 0,
     .err_last = 0,
     .integral = 0,
     .dt = 0.01f    
 };
+
+extern int8 duty;
 
 /* 积分限幅：防止“积分饱和” */
 const float INTEGRAL_MAX = 200.0f;   // 对应 PWM 占空差值
@@ -31,7 +33,7 @@ float servo_motor_angle = SERVO_MOTOR_M;
 extern float adc_error;
 
 //误差比例系数
-float p=10.0f;
+float p=9.0f;
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     设置舵机PWM
@@ -57,6 +59,15 @@ float p=10.0f;
 */
 void set_servo_pwm(void)
 {
+    if(-0.5<adc_error&&adc_error<0.5){
+        servo.kp = 0.6f;
+        duty= 23;
+    }
+    else{
+        servo.kp = 1.7f;
+        duty =20;
+    }
+    
     if(reset==false){
         servo.ki=0.01f;
     }

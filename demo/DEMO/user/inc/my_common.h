@@ -55,8 +55,8 @@
 
 #define SERVO_MOTOR_FREQ            (50 )                                           // 定义主板上舵机频率  请务必注意范围 50-300
 
-#define SERVO_MOTOR_L_MAX           (75)                                           // 定义主板上舵机活动范围 角度
-#define SERVO_MOTOR_R_MAX           (105)                                           // 定义主板上舵机活动范围 角度
+#define SERVO_MOTOR_L_MAX           (80)                                           // 定义主板上舵机活动范围 角度
+#define SERVO_MOTOR_R_MAX           (107)                                           // 定义主板上舵机活动范围 角度
 #define SERVO_MOTOR_M          		  (90)																						// 定义主板上舵机活动中值 角度
 
 #define SERVO_MOTOR_DUTY(x)         ((float)PWM_DUTY_MAX/(1000.0/(float)SERVO_MOTOR_FREQ)*(0.5+(float)(x)/90.0))

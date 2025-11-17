@@ -25,12 +25,12 @@ float adc_normal_buffer[ADC_CHANNEL_NUMBER];
 
 //定义差比和差公式中的系数
 
-float coef_A = 2.0;
-float coef_B = 2.5;
+float coef_A = 2.5;
+float coef_B = 3.5;
 float coef_C = 2.0;
 
 //能测量到最大的电感值
-uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={3726,3725,2867,3793};
+uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={3726,3725,3100,3793};
 
 //根据电感数值计算得到的误差值
 float adc_error;
