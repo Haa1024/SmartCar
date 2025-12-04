@@ -51,6 +51,7 @@ extern float adc_error;
 extern int8 duty;
 extern void reset_offset();
 bool reset = false;
+bool stop_car = false;
 
 struct pid_t{
     float kp, ki, kd;
@@ -131,13 +132,19 @@ void Init_All(void)
 extern void get_data();
 extern void set_servo_pwm();
 extern void set_speed_pwm();
+extern int8_t duty_straight;
+extern int8_t duty_circle;
+extern float kp_straight;
+extern float kp_circle;
+extern uint16_t MAX[4];
+extern uint8 times;
 
 //中断函数，在主函数中初始化为每10ms执行一次
 void pit_handler (void)
 {
-	
 	get_data();//获取传感器数据
 	set_servo_pwm();//设置舵机打角
+    if(getMagnet()==false){duty=true;}
 	set_speed_pwm();//设置电机速度
 }
 
@@ -191,6 +198,8 @@ void showMain()
          tft180_show_float(70, 30, adc_normal_buffer[1], 1,4);
 		 tft180_show_float(70, 45, adc_normal_buffer[2], 1,4);
 		 tft180_show_float(70, 60, adc_normal_buffer[3], 1,4);
+         tft180_show_uint(70,75,gpio_get_level(D4),4);
+        tft180_show_uint(70,90,times,4);
         }
      if(pages==2){
          
@@ -198,22 +207,26 @@ void showMain()
             tft180_clear();
             tft180_show_string(20, 0, "Value-Set");
             tft180_show_string(8, 15, "Reset-offset");
-	        tft180_show_string(8, 30, "Duty");
-	        tft180_show_string(8, 45, "PID-kp");
-	        tft180_show_string(8, 60, "PID-kd");
-            tft180_show_string(8, 75, "error-p");
+	        tft180_show_string(8, 30, "Duty-s");
+            tft180_show_string(8, 45, "Duty-c");  
+	        tft180_show_string(8, 60, "kp-s");
+            tft180_show_string(8, 75, "kp-c");
+	        tft180_show_string(8, 90, "PID-kd");
+            tft180_show_string(8, 105, "error-p");
             first=false;
             tft180_show_string(0, 15+select*15, ">");
         }
-         tft180_show_int(75, 30, duty, 4);
-		 tft180_show_float(75, 45, servo.kp, 2,3);
-		 tft180_show_float(75, 60, servo.kd, 2,3);
-         tft180_show_float(75, 75, p, 4,1);
+         tft180_show_int(75, 30, duty_straight, 4);
+         tft180_show_int(75, 45, duty_circle, 4);
+		 tft180_show_float(75, 60, kp_straight, 2,3);
+		 tft180_show_float(75, 75, kp_circle, 2,3);
+         tft180_show_float(75, 90, servo.kd, 2,3);
+         tft180_show_float(75, 105, p, 4,1);
         
         //按下第二个键时修改选中项
          if(key_get_state(KEY_2)==KEY_SHORT_PRESS)
          {
-             if(select==4)
+             if(select==6)
              {
                  select=0;
              }
@@ -234,15 +247,21 @@ void showMain()
                      reset = true;
                      break;
                  case 1:
-                     duty+=5;
+                     duty_straight+=1;
                      break;
                  case 2:
-                     servo.kp +=0.1f;
+                     duty_circle +=1;
                      break;
                  case 3:
-                     servo.kd +=0.001f;
+                     kp_straight +=0.01f;
                      break;
                  case 4:
+                     kp_circle+=0.01f;
+                     break;
+                 case 5:
+                     servo.kd+=0.001f;
+                     break;
+                 case 6:
                      p+=0.1f;
                      break;
              }
@@ -257,15 +276,21 @@ void showMain()
                      reset = true;
                      break;
                  case 1:
-                     duty-=5;
+                     duty_straight-=1;
                      break;
                  case 2:
-                     servo.kp -=0.1f;
+                     duty_circle -=1;
                      break;
                  case 3:
-                     servo.kd -=0.001f;
+                     kp_straight -=0.01f;
                      break;
                  case 4:
+                     kp_circle-=0.01f;
+                     break;
+                 case 5:
+                     servo.kd-=0.001f;
+                     break;
+                 case 6:
                      p-=0.1f;
                      break;
              }

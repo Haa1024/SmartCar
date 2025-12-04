@@ -4,6 +4,6 @@
 #include "zf_common_headfile.h"
 
 void magnetInit();
-uint8 getMagnet();
+bool getMagnet();
 
 #endif

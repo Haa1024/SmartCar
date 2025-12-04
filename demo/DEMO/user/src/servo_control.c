@@ -16,7 +16,7 @@ struct pid_t{
 struct pid_t servo = {
     .kp = 1.1f,
     .ki = 0.01f,  
-    .kd = 0.05f,
+    .kd = 0.049f,
     .err = 0,
     .err_last = 0,
     .integral = 0,
@@ -31,6 +31,11 @@ const float INTEGRAL_MAX = 200.0f;   // 对应 PWM 占空差值
 float servo_motor_angle = SERVO_MOTOR_M; 
 //PID系数kp
 extern float adc_error;
+
+int8_t duty_straight = 25;
+int8_t duty_circle = 20;
+float kp_straight = 0.5f;
+float kp_circle = 1.7f;
 
 //误差比例系数
 float p=9.0f;
@@ -60,16 +65,16 @@ float p=9.0f;
 void set_servo_pwm(void)
 {
     if(-0.5<adc_error&&adc_error<0.5){
-        servo.kp = 0.6f;
-        duty= 23;
+        servo.kp = kp_straight;
+        duty= duty_straight;
     }
     else{
-        servo.kp = 1.7f;
-        duty =20;
+        servo.kp = kp_circle;
+        duty =duty_circle;
     }
     
     if(reset==false){
-        servo.ki=0.01f;
+        servo.ki=0.0f;
     }
     else{
          servo.ki=0.01f;

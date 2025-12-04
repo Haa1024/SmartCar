@@ -8,6 +8,11 @@ int16 encoder_data_2 = 0;
 int16 encoder_data_3 = 0;
 int16 encoder_data_4 = 0;
 
+uint16_t timer = 0;
+uint16_t timer_1 = 1500;
+bool first_circle= true;
+
+uint16_t MAX[4]={0};
 //定义电磁信号adc相关变量
 uint8 channel_index = 0;
 adc_channel_enum channel_list[ADC_CHANNEL_NUMBER] = 
@@ -30,7 +35,7 @@ float coef_B = 3.5;
 float coef_C = 2.0;
 
 //能测量到最大的电感值
-uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={3726,3725,3100,3793};
+uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={3726,3725,3600,3693};
 
 //根据电感数值计算得到的误差值
 float adc_error;
@@ -88,6 +93,21 @@ void get_encoder()
 // }
 //	adc_error = (float)(adc_buffer[0] - adc_buffer[3] + offset);//用电磁信号计算偏差，两边电感采样的adc值相减
 //}
+void ifcircle(){
+  if(adc_buffer[0]>3300&&adc_buffer[1]>2200&&adc_buffer[3]>900&&first_circle==true){
+    timer=200;
+  }
+  if(timer_1!=0){
+    timer_1--;
+  }
+  if(timer!=0&&timer_1==0){
+      timer--;
+      if(adc_error<0.7){
+      adc_error=0.7;
+      }
+  }
+}
+
 	
 void get_adc()
 {
@@ -106,6 +126,10 @@ void get_adc()
         adc_history_index[channel_index] = (adc_history_index[channel_index] + 1) % FILTER_WINDOW_SIZE;
         // 4. 计算平均值作为滤波后的值（滑动平均核心）
         adc_buffer[channel_index] = adc_history_sum[channel_index] / FILTER_WINDOW_SIZE;
+        
+        if(MAX[channel_index]<adc_buffer[channel_index]){
+        MAX[channel_index]=adc_buffer[channel_index];
+        }
     }
     
     //计算归一化后的电感值
@@ -117,19 +141,18 @@ void get_adc()
     }
     
     // 计算误差值
-    float upper=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])+0.0001f-adc_offset;
+    float upper=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])+0.0001f;
     float lower=coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+fabs(adc_normal_buffer[1] - adc_normal_buffer[2])*coef_C+0.01f;
         
     adc_error_former=adc_error;
-    adc_error = upper/lower;
+    adc_error = upper/lower - adc_offset;
     if(fabs(adc_error-adc_error_former)>0.3f){
         adc_error=(adc_error+adc_error_former)/2.0;
     }
+    ifcircle();
     
 }
 	
-
-
 
 
 void get_data()
@@ -143,6 +166,8 @@ void reset_offset()
 {
     for(channel_index = 0; channel_index < ADC_CHANNEL_NUMBER; channel_index ++)
     {
-          adc_offset=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2]);
+        float upper=coef_A*(adc_normal_buffer[0] - adc_normal_buffer[3])+ coef_B*(adc_normal_buffer[1] - adc_normal_buffer[2])+0.0001f;
+        float lower=coef_A*(adc_normal_buffer[0] + adc_normal_buffer[3])+fabs(adc_normal_buffer[1] - adc_normal_buffer[2])*coef_C+0.01f;
+         adc_offset=upper/lower;
     }
 }
