@@ -144,7 +144,7 @@ void pit_handler (void)
 {
 	get_data();//获取传感器数据
 	set_servo_pwm();//设置舵机打角
-    if(getMagnet()==false){duty=true;}
+    if(getMagnet()==false){stop_car=true;}
 	set_speed_pwm();//设置电机速度
 }
 
@@ -213,6 +213,7 @@ void showMain()
             tft180_show_string(8, 75, "kp-c");
 	        tft180_show_string(8, 90, "PID-kd");
             tft180_show_string(8, 105, "error-p");
+            tft180_show_string(8, 120, "stop?:");
             first=false;
             tft180_show_string(0, 15+select*15, ">");
         }
@@ -222,11 +223,12 @@ void showMain()
 		 tft180_show_float(75, 75, kp_circle, 2,3);
          tft180_show_float(75, 90, servo.kd, 2,3);
          tft180_show_float(75, 105, p, 4,1);
+          tft180_show_int(75, 120, stop_car,1);
         
         //按下第二个键时修改选中项
          if(key_get_state(KEY_2)==KEY_SHORT_PRESS)
          {
-             if(select==6)
+             if(select==7)
              {
                  select=0;
              }
@@ -263,6 +265,9 @@ void showMain()
                      break;
                  case 6:
                      p+=0.1f;
+                     break;
+                 case 7:
+                     stop_car=false;
                      break;
              }
               key_clear_state(KEY_3);

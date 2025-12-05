@@ -4,7 +4,7 @@
 //控制电机速度，可取0-100，若太大可调低，若使用3S电池，占空比应限幅60%，默认10%
 int8 duty = 30;	
 extern float adc_error;
-float bigger = 0.0;
+float bigger = 2.0;
 extern bool stop_car;
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -17,20 +17,24 @@ extern bool stop_car;
 //-------------------------------------------------------------------------------------------------------------------
 void set_speed_pwm()
 {
-    int8 duty_left = duty - adc_error*bigger;
-    int8 duty_right = duty + adc_error*bigger;
+    int8 duty_left = duty + adc_error*bigger;
+    int8 duty_right = duty - adc_error*bigger;
 	//占空比限幅
 	if(duty_left > MAX_PWM_DUTY)duty_left = MAX_PWM_DUTY;
-    if(duty_left < 0) duty_left = 0;
+    if(duty_left < 10) duty_left = 10;
     if(duty_right > MAX_PWM_DUTY)duty_right = MAX_PWM_DUTY;
     if(duty_right < 10) duty_right = 10;
-    if(stop_car){duty_right=0;duty_left=0;}
-	gpio_set_level(MOTOR1_DIR, GPIO_LOW);                                   // DIR输出高电平
+    if(stop_car){
+            duty_right=1;
+            duty_left=1;
+            gpio_set_level(MOTOR1_DIR, GPIO_HIGH);
+            gpio_set_level(MOTOR2_DIR, GPIO_HIGH);}             
+         gpio_set_level(MOTOR1_DIR, GPIO_LOW);   
+	     gpio_set_level(MOTOR2_DIR, GPIO_LOW);         
+                         
 	pwm_set_duty(MOTOR1_PWM, duty_left * (PWM_DUTY_MAX / 100));                   // 计算占空比
-
-	gpio_set_level(MOTOR2_DIR, GPIO_LOW);                                   // DIR输出高电平
 	pwm_set_duty(MOTOR2_PWM, duty_right * (PWM_DUTY_MAX / 100));                   // 计算占空比
-
+    
 }
 
 /*

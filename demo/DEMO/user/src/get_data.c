@@ -9,7 +9,7 @@ int16 encoder_data_3 = 0;
 int16 encoder_data_4 = 0;
 
 uint16_t timer = 0;
-uint16_t timer_1 = 1500;
+uint16_t timer_1 = 1300;
 bool first_circle= true;
 
 uint16_t MAX[4]={0};
@@ -40,6 +40,8 @@ uint16_t adc_MAX[ADC_CHANNEL_NUMBER]={3726,3725,3600,3693};
 //根据电感数值计算得到的误差值
 float adc_error;
 float adc_error_former;
+
+int8 circle_times=0;
 
 
 //-------------------------- 滤波参数优化 --------------------------
@@ -95,7 +97,7 @@ void get_encoder()
 //}
 void ifcircle(){
   if(adc_buffer[0]>3300&&adc_buffer[1]>2200&&adc_buffer[3]>900&&first_circle==true){
-    timer=200;
+    timer=150;
   }
   if(timer_1!=0){
     timer_1--;

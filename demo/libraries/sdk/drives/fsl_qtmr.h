@@ -62,7 +62,7 @@ typedef enum _qtmr_counting_mode
     kQTMR_PriSrcRiseEdgeSecInpHigh, /*!< Count rise edges of pri SRC while sec inp high active */
     kQTMR_QuadCountMode,            /*!< Quadrature count mode, uses pri and sec sources */
     kQTMR_PriSrcRiseEdgeSecDir,     /*!< Count rising edges of pri SRC; sec SRC specifies dir */
-    kQTMR_SecSrcTrigPriCnt,         /*!< Edge of sec SRC trigger primary count until compare*/
+    kQTMR_SecSrcTrigPriCnt1,         /*!< Edge of sec SRC trigger primary count until compare*/
     kQTMR_CascadeCount              /*!< Cascaded count mode (up/down) */
 } qtmr_counting_mode_t;
 

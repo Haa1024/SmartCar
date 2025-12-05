@@ -15,6 +15,7 @@ bool getMagnet(){
     }
     magnet_last = magnet;
     if(times==2){
+        times=0;
     return false;
     }
     else{return true;}
