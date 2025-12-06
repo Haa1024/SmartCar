@@ -10,6 +10,7 @@ int16 encoder_data_4 = 0;
 
 uint16_t timer = 0;
 uint16_t timer_1 = 1300;
+
 bool first_circle= true;
 
 uint16_t MAX[4]={0};
@@ -75,7 +76,6 @@ void get_encoder()
     encoder_clear_count(ENCODER_3);                                             // 清空编码器计数
 
     encoder_data_4 = encoder_get_count(ENCODER_4);                              // 获取编码器计数
-    
     encoder_clear_count(ENCODER_4);                                             // 清空编码器计数
 }
 
@@ -96,7 +96,7 @@ void get_encoder()
 //	adc_error = (float)(adc_buffer[0] - adc_buffer[3] + offset);//用电磁信号计算偏差，两边电感采样的adc值相减
 //}
 void ifcircle(){
-  if(adc_buffer[0]>3300&&adc_buffer[1]>2200&&adc_buffer[3]>900&&first_circle==true){
+  if(adc_buffer[0]>3300&&adc_buffer[1]>2200&&adc_buffer[3]>900){
     timer=150;
   }
   if(timer_1!=0){
@@ -104,8 +104,13 @@ void ifcircle(){
   }
   if(timer!=0&&timer_1==0){
       timer--;
-      if(adc_error<0.7){
+      if(adc_error<0.7&&first_circle==true){
       adc_error=0.7;
+          first_circle=false;
+      }
+      if(adc_error<0.7&&first_circle==true){
+      adc_error=0.0;
+          first_circle=true;
       }
   }
 }

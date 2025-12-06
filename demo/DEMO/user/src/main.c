@@ -52,6 +52,31 @@ extern int8 duty;
 extern void reset_offset();
 bool reset = false;
 bool stop_car = false;
+typedef struct {
+    // PID参数
+    float KP;          // 比例系数
+    float KI;          // 积分系数
+    float KD;          // 微分系数
+
+    // 速度目标值与实际值
+    int16_t target_speed;// 目标速度
+    int16_t actual_speed;// 当前实际速度
+    
+    // 误差缓存（e(k), e(k-1), e(k-2)）
+    int16_t err[3];      // err[0]=e(k), err[1]=e(k-1), err[2]=e(k-2)
+    
+    // 输出限制
+    int8 out_max;     // 输出最大值
+    int8 out_min;     // 输出最小值
+    
+    // 当前PID输出（PWM占空比）
+    int8 output;     
+    
+} IncPID_Motor_TypeDef;
+
+extern IncPID_Motor_TypeDef speed_left,speed_right;
+extern void IncPID_Motor_Init(IncPID_Motor_TypeDef *pid, float KP, float KI, float KD,int16_t init_target);
+
 
 struct pid_t{
     float kp, ki, kd;
@@ -126,7 +151,8 @@ void Init_All(void)
    
     //初始化霍尔传感器
     magnetInit();
-   
+    IncPID_Motor_Init(&speed_left,0.48,0.5,0.5,0);
+    IncPID_Motor_Init(&speed_right,0.48,0.5,0.5,0);
 }
 
 extern void get_data();
